@@ -17,7 +17,6 @@
             <th>Teléfono</th>
             <th>Fecha</th>
             <th>Cabaña</th>
-            <th>Fecha_de_salida</th>
             <th>Acciones</th>
         </tr>
         {% for record in records %}
@@ -29,7 +28,6 @@
             <td>{{ record[4] }}</td>
             <td>{{ record[5] }}</td>
             <td>{{ record[6] }}</td>
-            <td>{{ record[7] }}</td>
             <td>
               <div class="act">
                 <form action="/update/{{ record[0] }}" method="post">
@@ -39,7 +37,6 @@
                     <input type="number" name="telefono" value="{{ record[4] }}">
                     <input type="Date" name="Fecha" value="{{ record[5] }}">
                     <input type="text" name="nombre_cabana" value="{{ record[6] }}">
-                    <input type="Date" name="Fecha_de_salida" value="{{ record[7] }}">
                     <button type="submit" onclick="return confirm('Estas Seguro?')">Actualizar
                         <i class="fa fa-trash"></i>
                     </button>
@@ -79,8 +76,6 @@
         <input type="Date" name="Fecha">
         <label>Cabaña:</label>
         <input type="text" name="nombre_cabana">
-        <label>Fecha_de_salida:</label>
-        <input type="Date" name="Fecha_de_salida">
         <button type="submit">Insertar</button>
     </form>
 
