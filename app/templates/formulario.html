@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Formulario de Reservaciones</title>
+  <style>
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-image: url("../static/img/plata.jpg");      
+      font-weight: bold;
+      box-shadow: 0 8px 8px 8px rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 400px;
+      padding: 10px;
+      background-color: #ffffff91;
+      border-radius: 30px;
+      border: 3px solid #ff8800;
+      text-align: center;
+      margin-top: 6%;
+      justify-content: center; 
+      align-items: center;
+    }    
+
+    .container input[type="text"],
+    .container input[type="email"],
+    .container input[type="tel"],
+    .container input[type="date"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 2px solid #00eeff;
+      border-radius: 5px;
+      box-sizing: border-box;
+      background-color: #f9f9f9; /* Cambia el color de fondo */
+      color: #000086; /* Cambia el color del texto */
+      font-size: 14px;
+    }
+
+    .container label {
+      display: inline-block;
+      width: 200px; /* Ancho fijo para las etiquetas */
+      font-weight: bold;
+    }
+
+    .label{
+      color: #008252;
+      background-color: #00eeff;
+    }
+
+    .btn1 {
+      display: inline-block;
+      background-color: #03a977;
+      border: 2px solid #00eeff;
+      color: #020202;
+      padding: 6px 8px;
+      text-decoration: none;
+      font-size: 14px;
+      border-radius: 4px;
+    }
+
+  .btn {
+    display: inline-block;
+    background-color: #a92d03;
+    border: 2px solid #ff6a00;
+    color: #ffffff;
+    padding: 8px 10px;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 4px;
+
+  }
+
+  </style>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+      const form = document.querySelector('form');
+
+      form.addEventListener('submit', function (event) {
+        const nombre = form.nombre.value;
+        const apellidos = form.apellidos.value;
+        const correo = form.correo.value;
+        const telefono = form.telefono.value;
+        const fecha = form.fecha.value; // Obtén el valor del campo de fecha
+
+
+        let isValid = true;
+
+        if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(nombre)) {
+          alert('Nombre inválido: Solo se permiten letras y espacios');
+          isValid = false;
+        }
+
+        if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(apellidos)) {
+          alert('Apellidos inválidos: Solo se permiten letras y espacios');
+          isValid = false;
+        }
+
+        if (!/^\+?[0-9]+$/.test(telefono)) {
+          alert('Teléfono inválido: No se permiten simbolos especiales y letras.');
+          isValid = false;
+        }
+
+        if (!/^[\w\.-]+@[\w\.-]+\.\w+$/.test(correo)) {
+          alert('Correo electrónico inválido');
+          isValid = false;
+        }
+
+        const selectedDate = new Date(fecha);
+        const currentDate = new Date();
+
+        if (selectedDate < currentDate) {
+          alert('Fecha de reserva inválida: No puede ser anterior a la fecha actual.');
+          isValid = false;
+        }
+
+        if (!isValid) {
+          event.preventDefault(); // Evita el envío del formulario si hay errores
+        }
+
+        if (!isValid) {
+          event.preventDefault(); // Evita el envío del formulario si hay errores
+        }
+      });
+    });
+  </script>
+
+</head>
+
+
+<body>
+
+  <div class="container">
+    <h1>Formulario de Reservación para tu cabaña.</h1>
+    <form method="post" action="/formulario"> <!-- Agregado 'action' para especificar la ruta del formulario -->
+
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" name="nombre" required><br>
+
+      <label for="apellidos">Apellidos:</label>
+      <input type="text" id="apellidos" name="apellidos" required><br>
+
+      <label for="correo">Correo electrónico:</label>
+      <input type="email" id="correo" name="correo" required><br>
+
+      <label for="telefono">Teléfono:</label>
+      <input type="tel" id="telefono" name="telefono" required><br> <!-- Cambiado 'number' a 'tel' para aceptar el formato de teléfono -->
+      
+      <label for="fecha">Fecha de reserva:</label>
+      <input type="date" id="fecha" name="fecha" required><br>
+      
+     <!-- Campo oculto para capturar el nombre de la cabaña -->
+     <input type="hidden" id="nombre_cabana" name="nombre_cabana" value="{{ request.args.get('nombre_cabana') }}">
+
+      <label>Nombre de la cabaña:</label>
+      <span>{{ request.args.get('nombre_cabana') }}</span><br>
+
+      <input type="submit" class="btn1" value="Enviar">
+    </form>
+
+    <a href="/reservar/" class="btn">Regresar.</a>
+    
+  </div>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const nombreCabana = urlParams.get('cabana');
+
+      if (nombreCabana) {
+        const nombreCabanaField = document.getElementById('nombre_cabana');
+        nombreCabanaField.value = nombreCabana;
+      }
+    });
+  </script>
+
+</body>
+</html>

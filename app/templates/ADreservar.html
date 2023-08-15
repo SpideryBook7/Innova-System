@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tabla CRUD</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='../static/css/ADreservar.css') }}">
+    
+</head>
+<body>
+    <div class="container">
+    <h1>Tabla de reservaciones</h1>
+    <table border="2">
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Correo electronico</th>
+            <th>Teléfono</th>
+            <th>Fecha</th>
+            <th>Cabaña</th>
+            <th>Fecha_de_salida</th>
+            <th>Acciones</th>
+        </tr>
+        {% for record in records %}
+        <tr>
+            <td>{{ record[0] }}</td>
+            <td>{{ record[1] }}</td>
+            <td>{{ record[2] }}</td>
+            <td>{{ record[3] }}</td>
+            <td>{{ record[4] }}</td>
+            <td>{{ record[5] }}</td>
+            <td>{{ record[6] }}</td>
+            <td>{{ record[7] }}</td>
+            <td>
+              <div class="act">
+                <form action="/update/{{ record[0] }}" method="post">
+                    <input type="text" name="nombre" value="{{ record[1] }}">
+                    <input type="text" name="apellidos" value="{{ record[2] }}">
+                    <input type="email" name="correo" value="{{ record[3] }}">
+                    <input type="number" name="telefono" value="{{ record[4] }}">
+                    <input type="Date" name="Fecha" value="{{ record[5] }}">
+                    <input type="text" name="nombre_cabana" value="{{ record[6] }}">
+                    <input type="Date" name="Fecha_de_salida" value="{{ record[7] }}">
+                    <button type="submit" onclick="return confirm('Estas Seguro?')">Actualizar
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </form>
+              </div>
+                <form action="/delete/{{ record[0] }}" method="post">
+                    <button type="submit" onclick="return confirm('Estas Seguro?')">Eliminar
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+
+        <div class="bus">
+        <!-- Estilo del formulario de búsqueda -->
+        <h2 class="search-form">Buscar registro</h2>
+        <form action="/buscar" method="post" class="search-form">
+            <label>Nombre o Apellidos:</label>
+            <input type="text" name="keyword">
+            <button type="submit">Buscar</button>
+        </form>
+        </div>
+    </table>
+
+    <h2>Insertar nuevo registro</h2>
+    <form action="/insert" method="post">
+        <label>Nombre:</label>
+        <input type="text" name="nombre">
+        <label>Apellidos:</label>
+        <input type="text" name="apellidos">
+        <label>Correo:</label>
+        <input type="email" name="correo">
+        <label>Teléfono:</label>
+        <input type="number" name="telefono">
+        <label>Fecha:</label>
+        <input type="Date" name="Fecha">
+        <label>Cabaña:</label>
+        <input type="text" name="nombre_cabana">
+        <label>Fecha_de_salida:</label>
+        <input type="Date" name="Fecha_de_salida">
+        <button type="submit">Insertar</button>
+    </form>
+
+    <div class="REG">
+        <a href="{{url_for('admin')}}">
+        <button type="submit">Regresar</button>
+        </a>
+    </div>
+</div>
+
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+      const form = document.querySelector('form');
+
+      form.addEventListener('submit', function (event) {
+        const nombre = form.nombre.value;
+        const apellidos = form.apellidos.value;
+        const correo = form.correo.value;
+        const telefono = form.telefono.value;
+        const fecha = form.fecha.value; // Obtén el valor del campo de fecha
+
+
+        let isValid = true;
+
+        if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(nombre)) {
+          alert('Nombre inválido: Solo se permiten letras y espacios');
+          isValid = false;
+        }
+
+        if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(apellidos)) {
+          alert('Apellidos inválidos: Solo se permiten letras y espacios');
+          isValid = false;
+        }
+
+        if (!/^\+?[0-9]+$/.test(telefono)) {
+          alert('Teléfono inválido: No se permiten simbolos especiales y letras.');
+          isValid = false;
+        }
+
+        if (!/^[\w\.-]+@[\w\.-]+\.\w+$/.test(correo)) {
+          alert('Correo electrónico inválido');
+          isValid = false;
+        }
+
+        const selectedDate = new Date(fecha);
+        const currentDate = new Date();
+
+        if (selectedDate < currentDate) {
+          alert('Fecha de reserva inválida: No puede ser anterior a la fecha actual.');
+          isValid = false;
+        }
+
+        if (!isValid) {
+          event.preventDefault(); // Evita el envío del formulario si hay errores
+        }
+
+        if (!isValid) {
+          event.preventDefault(); // Evita el envío del formulario si hay errores
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

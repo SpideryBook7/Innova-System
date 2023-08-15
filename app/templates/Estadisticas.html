@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gráfica de Reservaciones</title>
+</head>
+<style>
+
+    body{
+        background-color: rgba(170, 252, 247, 0.545);
+        text-align: center;
+    }
+
+    .btn{
+        display: inline-block;
+        background-color: #00b7ba;
+        color: #ffffff;
+        font-size: 20px;
+        margin: 15px;
+    }
+
+</style>
+
+<body>
+    <h1>Gráfica de Reservaciones</h1>
+    <img src="data:image/png;base64,{{ graph }}" alt="Gráfica de Reservaciones">
+
+    <div class="btn">
+        <a href="/admin/" class="btn">Regresar.</a>
+    </div>
+</body>
+</html>

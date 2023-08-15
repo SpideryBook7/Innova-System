@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Reservaciones</title>
+  <link rel="stylesheet" type="text/css"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" type="text/css" href="../static/css/reservar.css">
+  <link rel="stylesheet" type="text" href="../static/css/reservar.js">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="../static/css/lightbox.css">
+  <link rel="stylesheet" type="text" href="../static/js/lightbox-plus-jquery.min.js">
+
+</head>
+
+<body>
+
+  <header>
+
+    <div class="header-left"></div>
+    <h1 id="miTexto">Reserva en nuestras cabañas..</h1>
+    </div>
+
+    <div class="header-right">
+
+      <a href="/inicio/" style="margin-left: 20px; margin-right: 20px; text-align: center;">
+        <h2>Inicio</h2>
+      </a>
+
+      <a href="/reservar/" style="margin-left: 20px; margin-right: 20px; text-align: center;">
+        <h2>Reservar</h2>
+      </a>
+
+      <a href="/acceso-login">
+        <h2>Admin</h2>
+      </a>
+
+    </div>
+
+  </header>
+
+  <div class="contenedor">
+
+    <div class="item contenedor-cabana-">
+      <H2>CABAÑA BONITA.</H2>
+      <img src="../static/img/bonita.jpg" alt="Imagen 1">
+      <div class="galeria">
+        <img src="../static/img/interiorbonita1.jpg" alt="Interior 1">
+        <img src="../static/img/interiorbonita5.jpg" alt="Interior 5">
+        <img src="../static/img/interiorbonita3.jpg" alt="Interior 3">
+        <img src="../static/img/interiorbonita4.jpg" alt="Interior 4">
+        <img src="../static/img/interiorbonita6.jpg" alt="Interior 6">
+        <img src="../static/img/interiorbonita2.jpg" alt="Interior 2">
+      </div>
+      <p>¡Su nombre lo dice todo! Su chimenea te encantará y te hará volver mas pronto de lo que crees.
+        Tiene una capacidad para 7 personas y cuenta con los servicios de Internet, TV, DVD, Agua Caliente,
+        Estacionamiento y la primer carga de leña va por nuestra cuenta.</p>
+        <a href="/formulario?nombre_cabana=Bonita" class="btn">Reservar</a>
+      </div>
+
+    <div class="item contenedor-cabana-">
+      <h2>CABAÑA GOLOSA.</h2>
+      <img src="../static/img/golosa.jpg" alt="Imagen 2">
+      <div class="galeria">
+        <img src="../static/img/interiorgolosa1.jpg" alt="Interior 1">
+        <img src="../static/img/interiorgolosa2.jpg" alt="Interior 2">
+        <img src="../static/img/interiorgolosa3.jpg" alt="Interior 3">
+        <img src="../static/img/interiorgolosa4.jpg" alt="Interior 4">
+        <img src="../static/img/interiorgolosa5.jpg" alt="Interior 5">
+      </div>
+      <p>No te gustará salir de ella por un buen Rato!…
+        Te lo digo por experiencia. Tiene una capacidad para 4 personas y cuenta con los servicios de Internet,
+        TV, DVD, Agua Caliente, Estacionamiento y la primer carga de leña va por nuestra cuenta.</p>
+        <a href="/formulario?nombre_cabana=Golosa" class="btn">Reservar</a>
+    </div>
+
+    <div class="item contenedor-cabana-">
+      <h2>CABAÑA CONSENTIDA.</h2>
+      <img src="../static/img/consentida.jpg" alt="Imagen 2">
+      <div class="galeria">
+        <img src="../static/img/interiorconsentida1.jpg" alt="Interior 1">
+        <img src="../static/img/interiorconsentida2.jpg" alt="Interior 2">
+        <img src="../static/img/interiorconsentida3.jpg" alt="Interior 3">
+        <img src="../static/img/interiorconsentida4.jpg" alt="Interior 4">
+        <img src="../static/img/interiorconsentida5.jpg" alt="Interior 5">
+      </div>
+      <p>Déjate consentir con el canto de los jilgueros y de vez en cuando con un rose de neblina que te envolvera y
+        sentirás paz y tranquilidad. Tiene una capacidad para 4 personas y cuenta con los servicios importantes
+        y la primer carga de leña va por nuestra cuenta.</p>
+        <a href="/formulario?nombre_cabana=Consentida" class="btn">Reservar</a>
+    </div>
+
+    <div class="item contenedor-cabana-">
+      <h2>CABAÑA COQUETA.</h2>
+      <img src="../static/img/coqueta.jpg" alt="Imagen 2">
+      <div class="galeria">
+        <img src="../static/img/interiorcoqueta1.jpg" alt="Interior 1">
+        <img src="../static/img/interiorcoqueta2.jpg" alt="Interior 2">
+        <img src="../static/img/interiorcoqueta3.jpg" alt="Interior 3">
+        <img src="../static/img/interiorcoqueta4.jpg" alt="Interior 4">
+        <img src="../static/img/interiorcoqueta5.jpg" alt="Interior 5">
+        <img src="../static/img/interiorcoqueta6.jpg" alt="Interior 6">
+      </div>
+      <p>Oculta tus ojos! Porque despues de verla te coqueteara para que tu estancia sea en ella, su balcón te seducira
+        para despertar con el canto de los jilgueros. Tiene una capacidad para 6 personas y cuenta con los servicios de
+        Internet, TV, DVD, Agua Caliente, Estacionamiento y la primer carga de leña va por nuestra cuenta.</p>
+        <a href="/formulario?nombre_cabana=Coqueta" class="btn">Reservar</a>
+    </div>
+
+    <div class="item contenedor-cabana-">
+      <h2>LAS GROSERAS.</h2>
+      <img src="../static/img/groseras.jpg" alt="Imagen 2">
+      <div class="galeria">
+        <img src="../static/img/interiorgrosera1.jpg" alt="Interior 1">
+        <img src="../static/img/interiorgrosera2.jpg" alt="Interior 2">
+        <img src="../static/img/interiorgrosera3.jpg" alt="Interior 3">
+        <img src="../static/img/interiorgrosera4.jpg" alt="Interior 4">
+        <img src="../static/img/interiorgrosera5.jpg" alt="Interior 5">
+        <img src="../static/img/interiorgrosera6.jpg" alt="Interior 6">
+      </div>
+      <p>
+        ¡Su nombre lo dice todo! Su chimenea te encantará y te hará volver mas pronto de lo que crees. Tiene una
+        capacidad para 2 personas y cuenta con los servicios de TV, DVD, Agua Caliente, Estacionamiento y la primer
+        carga de leña es cortesía de la casa.</p>
+        <a href="/formulario?nombre_cabana=Groseras" class="btn">Reservar</a>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>Derechos de autor Cabañas el Despertar &copy; 2023 - Reservaciones de Cabañas el Despertar.</p>
+  </footer>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const cabana = urlParams.get('cabana');
+
+        if (cabana) {
+            const reservaLink = document.querySelector('.btn');
+            reservaLink.href += `&nombre_cabana=${cabana}`;
+        }
+    });
+  </script>
+
+  <script src="../static/js/script.js"></script>
+</body>
+
+</html>
