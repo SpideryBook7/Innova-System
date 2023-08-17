@@ -23,6 +23,13 @@ header {
   font-size: 60px;
   justify-content: left;
   display: flex;
+  text-align: center;
+  align-items: center;
+}
+
+.header-left-h1{
+  text-align: center;
+  align-items: center;
 }
 
 .header-right {
@@ -52,6 +59,8 @@ section {
 header h1 {
   color: #f7d18f9f;
   border-radius: 4px;
+  text-align: center;
+  justify-content: center;
 }
 
 @keyframes animacionTexto {

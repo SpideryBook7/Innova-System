@@ -56,6 +56,8 @@
         Tiene una capacidad para 7 personas y cuenta con los servicios de Internet, TV, DVD, Agua Caliente,
         Estacionamiento y la primer carga de leña va por nuestra cuenta.</p>
         <a href="/formulario?nombre_cabana=Bonita" class="btn">Reservar</a>
+        <a h2="/formulario?precio=$150" class="text">$150</a>
+
       </div>
 
     <div class="item contenedor-cabana-">
@@ -72,6 +74,8 @@
         Te lo digo por experiencia. Tiene una capacidad para 4 personas y cuenta con los servicios de Internet,
         TV, DVD, Agua Caliente, Estacionamiento y la primer carga de leña va por nuestra cuenta.</p>
         <a href="/formulario?nombre_cabana=Golosa" class="btn">Reservar</a>
+        <a h2="/formulario?precio" class="text">$150</a>
+
     </div>
 
     <div class="item contenedor-cabana-">
@@ -88,6 +92,8 @@
         sentirás paz y tranquilidad. Tiene una capacidad para 4 personas y cuenta con los servicios importantes
         y la primer carga de leña va por nuestra cuenta.</p>
         <a href="/formulario?nombre_cabana=Consentida" class="btn">Reservar</a>
+        <a h2="/formulario?precio" class="text">$150</a>
+
     </div>
 
     <div class="item contenedor-cabana-">
@@ -105,6 +111,8 @@
         para despertar con el canto de los jilgueros. Tiene una capacidad para 6 personas y cuenta con los servicios de
         Internet, TV, DVD, Agua Caliente, Estacionamiento y la primer carga de leña va por nuestra cuenta.</p>
         <a href="/formulario?nombre_cabana=Coqueta" class="btn">Reservar</a>
+        <a h2="/formulario?precio" class="text">$150</a>
+
     </div>
 
     <div class="item contenedor-cabana-">
@@ -123,6 +131,7 @@
         capacidad para 2 personas y cuenta con los servicios de TV, DVD, Agua Caliente, Estacionamiento y la primer
         carga de leña es cortesía de la casa.</p>
         <a href="/formulario?nombre_cabana=Groseras" class="btn">Reservar</a>
+        <a h2="/formulario?precio=$150" class="text">$150</a>
     </div>
 
   </div>
@@ -139,7 +148,11 @@
         if (cabana) {
             const reservaLink = document.querySelector('.btn');
             reservaLink.href += `&nombre_cabana=${cabana}`;
+
+        const precioLink = document.querySelector('.btn');
+        precioLink.href = '$precio=${precio}';
         }
+
     });
   </script>
 

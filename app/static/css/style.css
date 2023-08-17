@@ -10,11 +10,11 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    width: 250px;
+    width: 200px;
     height: 100%;
     background-color: #333;
     color: #fff;
-    transition: width 0.3s; /* Agregamos una transición para animar el cambio de ancho */
+    transition: width 0.3s;/* Agregamos una transición para animar el cambio de ancho */
 }
 
 /* Estilo para ocultar el menú al agregar la clase 'minimizado' */
@@ -67,7 +67,9 @@ body {
 .contenido {
     margin-left: 250px; /* Ancho del menú lateral */
     padding: 20px;
-    transition: margin-left 0.3s; /* Agregamos una transición para animar el cambio de margen */
+    transition: margin-left 0.3s;
+    flex: 1;
+    text-align: center; /* Agregamos una transición para animar el cambio de margen */
 }
 
 /* Estilo para ajustar el margen del contenido cuando el menú está minimizado */

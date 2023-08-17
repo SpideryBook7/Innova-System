@@ -90,7 +90,7 @@
         const correo = form.correo.value;
         const telefono = form.telefono.value;
         const fecha = form.fecha.value; // Obtén el valor del campo de fecha
-
+        const fecha_de_salida = form.fecha_de_salida.data
 
         let isValid = true;
 
@@ -122,8 +122,14 @@
           isValid = false;
         }
 
-        if (!isValid) {
-          event.preventDefault(); // Evita el envío del formulario si hay errores
+        const fechaSalidaInput = document.getElementById('fecha_de_salida');
+        const fechaSalida = fechaSalidaInput.value;
+
+        const selectedDateSalida = new Date(fechaSalida);
+
+        if (selectedDateSalida < currentDate) {
+          alert('Fecha de salida inválida: No puede ser anterior a la fecha actual.');
+          isValid = false;
         }
 
         if (!isValid) {
@@ -156,12 +162,22 @@
       
       <label for="fecha">Fecha de reserva:</label>
       <input type="date" id="fecha" name="fecha" required><br>
-      
+
+      <label for="fecha">Fecha de salida:</label>
+      <input type="date" id="fecha_de_salida" name="fecha_de_salida" required><br>
+
      <!-- Campo oculto para capturar el nombre de la cabaña -->
      <input type="hidden" id="nombre_cabana" name="nombre_cabana" value="{{ request.args.get('nombre_cabana') }}">
 
       <label>Nombre de la cabaña:</label>
       <span>{{ request.args.get('nombre_cabana') }}</span><br>
+
+
+      <label>Precio:</label>
+      <span>{{ form.precio.data }}</span><br>
+      {% if form.precio.errors %}
+        <small class="form-text text-danger">{{ form.precio.errors[0] }}</small>
+    {% endif %}
 
       <input type="submit" class="btn1" value="Enviar">
     </form>

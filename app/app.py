@@ -12,12 +12,16 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, PageBreak
 from wtforms import StringField, DateField, validators
 from wtforms import Form, StringField, validators
 from datetime import datetime
+from wtforms import FloatField
+from wtforms import Form, StringField, validators, DecimalField
 import base64
 # pylint: disable=unused-import
 import pandas as pd
 import matplotlib.pyplot as plt
 # pylint: enable=unused-importfrom wtforms import StringField, HiddenField
 from wtforms import StringField, HiddenField
+from wtforms import Form, StringField, HiddenField
+
 
 app = Flask(__name__)
 
@@ -49,17 +53,17 @@ def show_records():
         keyword = request.form["keyword"]
         cursor = conn.cursor()
         search_query = """
-            SELECT id, nombre, apellidos, correo, telefono, Fecha, nombre_cabana
+            SELECT id, nombre, apellidos, correo, telefono, Fecha, nombre_cabana, fecha_de_salida, precio   
             FROM reservaciones
-            WHERE nombre LIKE %s OR apellidos LIKE %s
+            WHERE nombre LIKE %s OR apellidos LIKE %s OR fecha LIKE %s
         """
-        data = (f"%{keyword}%", f"%{keyword}%")
+        data = (f"%{keyword}%", f"%{keyword}%", f"%{keyword}%")
         cursor.execute(search_query, data)
         records = cursor.fetchall()
         cursor.close()
     else:
         cursor = conn.cursor()
-        select_query = "SELECT id, nombre, apellidos, correo, telefono, Fecha, nombre_cabana  FROM reservaciones"
+        select_query = "SELECT id, nombre, apellidos, correo, telefono, Fecha, nombre_cabana, fecha_de_salida, precio  FROM reservaciones"
         cursor.execute(select_query)
         records = cursor.fetchall()
         cursor.close()
@@ -77,11 +81,11 @@ def buscar():
         keyword = request.form["keyword"]
         cursor = conn.cursor()
         search_query = """
-            SELECT id, nombre, apellidos, correo, telefono, Fecha, nombre_cabana
+            SELECT id, nombre, apellidos, correo, telefono, Fecha, nombre_cabana, fecha_de_salida, precio
             FROM reservaciones
-            WHERE nombre LIKE %s OR apellidos LIKE %s
+            WHERE nombre LIKE %s OR apellidos LIKE %s OR fecha LIKE %s
         """
-        data = (f"%{keyword}%", f"%{keyword}%")
+        data = (f"%{keyword}%", f"%{keyword}%", f"%{keyword}%")
         cursor.execute(search_query, data)
         records = cursor.fetchall()
         cursor.close()
@@ -97,10 +101,10 @@ def insert_record():
 
     cursor = conn.cursor()
     insert_query = """
-        INSERT INTO reservaciones (nombre, apellidos, correo, telefono, Fecha, nombre_cabana )
-        VALUES (%s, %s, %s, %s, %s, %s)
+        INSERT INTO reservaciones (nombre, apellidos, correo, telefono, Fecha, nombre_cabana , fecha_de_salida, precio)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
     """
-    data = (request.form["nombre"], request.form["apellidos"], request.form["correo"], request.form["telefono"], request.form["Fecha"], request.form["nombre_cabana"])
+    data = (request.form["nombre"], request.form["apellidos"], request.form["correo"], request.form["telefono"], request.form["Fecha"], request.form["nombre_cabana"], request.form["fecha_de_salida"], request.form["precio"] )
     cursor.execute(insert_query, data)
     conn.commit()
     cursor.close()
@@ -116,10 +120,10 @@ def update_record(record_id):
     cursor = conn.cursor()
     update_query = """
         UPDATE reservaciones
-        SET nombre = %s, apellidos = %s, correo = %s, telefono = %s, Fecha = %s, nombre_cabana = %s
+        SET nombre = %s, apellidos = %s, correo = %s, telefono = %s, Fecha = %s, nombre_cabana = %s, fecha_de_salida = %s, precio = %s
         WHERE id = %s
     """
-    data = (request.form["nombre"], request.form["apellidos"], request.form["correo"], request.form["telefono"], request.form["Fecha"], request.form["nombre_cabana"], record_id)
+    data = (request.form["nombre"], request.form["apellidos"], request.form["correo"], request.form["telefono"], request.form["Fecha"], request.form["nombre_cabana"], request.form["fecha_de_salida"], request.form["precio"], record_id)
     cursor.execute(update_query, data)
     conn.commit()
     cursor.close()
@@ -152,7 +156,7 @@ def login():
         _password = request.form['txtPassword']
         _password_hash = hashlib.sha512(_password.encode()).hexdigest()
 
-
+        
         conn = connect_to_database()
         cursor = conn.cursor(dictionary=True)        
         cursor.execute('SELECT * FROM usuarios WHERE correo = %s AND password = %s',(_correo,_password,))
@@ -186,6 +190,9 @@ class ReservaForm(Form):
     ])
     fecha = StringField('Fecha de reserva', [validators.InputRequired()])
     nombre_cabana = HiddenField('Nombre de la cabaña')
+    fecha_de_salida = StringField('Fecha de salida')
+    precio = HiddenField('Precio', default=150)  # Establecer el valor del precio fijo
+
 
 @app.route('/formulario', methods=['GET', 'POST'])
 def reserva():
@@ -198,6 +205,8 @@ def reserva():
         telefono = form.telefono.data
         fecha = form.fecha.data
         nombre_cabana = form.nombre_cabana.data
+        fecha_de_salida = form.fecha_de_salida.data
+        precio = form.precio.data
 
         # Validar que la fecha no sea anterior a la fecha actual
         fecha_actual = datetime.now().strftime('%Y-%m-%d')
@@ -210,8 +219,8 @@ def reserva():
         cursor = connection.cursor()
 
         # Insertar los datos en la base de datos
-        insert_query = "INSERT INTO reservaciones (nombre, apellidos, correo, telefono, fecha, nombre_cabana) VALUES (%s, %s, %s, %s, %s, %s)"
-        data = (nombre, apellidos, correo, telefono, fecha, nombre_cabana )
+        insert_query = "INSERT INTO reservaciones (nombre, apellidos, correo, telefono, fecha, nombre_cabana, fecha_de_salida, precio) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+        data = (nombre, apellidos, correo, telefono, fecha, nombre_cabana , fecha_de_salida, precio)
         cursor.execute(insert_query, data)
         connection.commit()
 
@@ -220,14 +229,14 @@ def reserva():
         connection.close()
         
         # Generar el PDF
-        pdf = generate_pdf(nombre, apellidos, correo, telefono, fecha, nombre_cabana)
+        pdf = generate_pdf(nombre, apellidos, correo, telefono, fecha, nombre_cabana, fecha_de_salida, precio)
         
         # Enviar el PDF como respuesta de descarga
         return send_pdf(pdf)
 
     return render_template('formulario.html', form=form)
 
-def generate_pdf(nombre, apellidos, correo, telefono, fecha, nombre_cabana ):
+def generate_pdf(nombre, apellidos, correo, telefono, fecha, nombre_cabana, fecha_de_salida, precio):
     buffer = BytesIO()
     doc = SimpleDocTemplate(buffer, pagesize=letter)
 
@@ -253,6 +262,8 @@ def generate_pdf(nombre, apellidos, correo, telefono, fecha, nombre_cabana ):
         f"<b>Correo electrónico:</b> {correo}",
         f"<b>Teléfono:</b> {telefono}",
         f"<b>Fecha de reserva:</b> {fecha}",
+        f"<b>Fecha de salida:</b> {fecha_de_salida}",
+        f"<b>Precio:</b> {precio}",
         f"<b>Políticas Generales del Establecimiento</b>",
         f"<b>1. Toda persona que entre a su cabaña en calidad de huésped, tiene la obligación de registrarse en recepción por cada cabaña (en excepción de no tener previa reservación).</b>",
         f"<b>2. Toda persona titular o a cargo de su cabaña tiene la obligación de cubir cualquier desperfecto que cause o cargo adicional que se realice, está obligado a cubrir el costo.</b>",

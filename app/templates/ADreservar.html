@@ -17,7 +17,8 @@
             <th>Teléfono</th>
             <th>Fecha</th>
             <th>Cabaña</th>
-            <th>Fecha_de_salida</th>
+            <th>Fecha de salida</th>
+            <th>precio</th>
             <th>Acciones</th>
         </tr>
         {% for record in records %}
@@ -30,6 +31,7 @@
             <td>{{ record[5] }}</td>
             <td>{{ record[6] }}</td>
             <td>{{ record[7] }}</td>
+            <td>{{ record[8] }}</td>
             <td>
               <div class="act">
                 <form action="/update/{{ record[0] }}" method="post">
@@ -39,9 +41,10 @@
                     <input type="number" name="telefono" value="{{ record[4] }}">
                     <input type="Date" name="Fecha" value="{{ record[5] }}">
                     <input type="text" name="nombre_cabana" value="{{ record[6] }}">
-                    <input type="Date" name="Fecha_de_salida" value="{{ record[7] }}">
+                    <input type="Date" name="fecha_de_salida" value="{{ record[7] }}">
+                    <input type="number" name="precio" value="{{ record[8] }}">
                     <button type="submit" onclick="return confirm('Estas Seguro?')">Actualizar
-                        <i class="fa fa-trash"></i>
+                    <i class="fa fa-trash"></i>
                     </button>
                 </form>
               </div>
@@ -58,7 +61,7 @@
         <!-- Estilo del formulario de búsqueda -->
         <h2 class="search-form">Buscar registro</h2>
         <form action="/buscar" method="post" class="search-form">
-            <label>Nombre o Apellidos:</label>
+            <label>Busqueda Avanzada:</label>
             <input type="text" name="keyword">
             <button type="submit">Buscar</button>
         </form>
@@ -79,8 +82,10 @@
         <input type="Date" name="Fecha">
         <label>Cabaña:</label>
         <input type="text" name="nombre_cabana">
-        <label>Fecha_de_salida:</label>
-        <input type="Date" name="Fecha_de_salida">
+        <label>Fecha de salida:</label>
+        <input type="Date" name="fecha_de_salida">
+        <label>precio:</label>
+        <input type="numer" name="precio">
         <button type="submit">Insertar</button>
     </form>
 
@@ -101,7 +106,8 @@
         const correo = form.correo.value;
         const telefono = form.telefono.value;
         const fecha = form.fecha.value; // Obtén el valor del campo de fecha
-
+        const fecha_de_salida = form.fecha_de_salida.value; // Obtén el valor del campo de fecha
+        const precio = form.precio.value;
 
         let isValid = true;
 
@@ -140,6 +146,25 @@
         if (!isValid) {
           event.preventDefault(); // Evita el envío del formulario si hay errores
         }
+
+        const selectedDate = new Date(fecha_de_salida);
+        const currentDate = new Date();
+
+        if (selectedDate < currentDate) {
+          alert('Fecha de reserva inválida: No puede ser anterior a la fecha actual.');
+          isValid = false;
+        }
+
+        if (!isValid) {
+          event.preventDefault(); // Evita el envío del formulario si hay errores
+        }
+
+        if (!isValid) {
+          event.preventDefault(); // Evita el envío del formulario si hay errores
+        }
+
+
+        
       });
     });
   </script>
