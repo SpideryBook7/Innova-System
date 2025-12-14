@@ -1,4 +1,5 @@
 import os
+import shutil
 import sqlite3
 import hashlib
 import base64
@@ -22,7 +23,25 @@ app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY", "dev-secret-key")
 
 def get_db_connection():
-    conn = sqlite3.connect('database.db')
+    db_path = 'database.db'
+    
+    # Check if we are running in a serverless environment (Linux-like)
+    if os.name != 'nt':
+        # Use /tmp for writable database
+        tmp_db_path = '/tmp/database.db'
+        
+        # If database doesn't exist in /tmp, copy it from source
+        if not os.path.exists(tmp_db_path):
+            if os.path.exists(db_path):
+                shutil.copyfile(db_path, tmp_db_path)
+            else:
+                # Handle case where original DB might be elsewhere or init needed
+                # For now assume it exists in repo
+                pass
+                
+        db_path = tmp_db_path
+
+    conn = sqlite3.connect(db_path)
     conn.row_factory = sqlite3.Row
     return conn
 
