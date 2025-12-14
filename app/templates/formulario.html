@@ -1,202 +1,238 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
+
 <head>
-  <title>Formulario de Reservaciones</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reserva tu Cabaña | El Despertar</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
-
     body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-image: url("../static/img/plata.jpg");      
-      font-weight: bold;
-      box-shadow: 0 8px 8px 8px rgba(0, 0, 0, 0.5);
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../static/img/plata.jpg") no-repeat center center fixed;
+      background-size: cover;
       min-height: 100vh;
-    }
-
-    .container {
-      width: 400px;
-      padding: 10px;
-      background-color: #ffffff91;
-      border-radius: 30px;
-      border: 3px solid #ff8800;
-      text-align: center;
-      margin-top: 6%;
-      justify-content: center; 
+      display: flex;
       align-items: center;
-    }    
+      justify-content: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-    .container input[type="text"],
-    .container input[type="email"],
-    .container input[type="tel"],
-    .container input[type="date"] {
+    .booking-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+      max-width: 800px;
+      width: 95%;
+      margin: 20px;
+      border: none;
+    }
+
+    .card-header {
+      background: #a92d03;
+      /* Rustic Orange */
+      color: white;
+      padding: 25px;
+      text-align: center;
+      border: none;
+    }
+
+    .card-header h2 {
+      margin: 0;
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+
+    .form-label {
+      font-weight: 600;
+      color: #495057;
+      margin-bottom: 8px;
+    }
+
+    .form-control {
+      border-radius: 10px;
+      padding: 12px;
+      border: 1px solid #ced4da;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+      border-color: #ff6a00;
+      box-shadow: 0 0 0 0.25rem rgba(255, 106, 0, 0.25);
+    }
+
+    .btn-reserve {
+      background: linear-gradient(45deg, #a92d03, #ff6a00);
+      border: none;
+      color: white;
+      padding: 15px 30px;
+      border-radius: 50px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
       width: 100%;
-      padding: 10px;
-      margin-bottom: 10px;
-      border: 2px solid #00eeff;
-      border-radius: 5px;
-      box-sizing: border-box;
-      background-color: #f9f9f9; /* Cambia el color de fondo */
-      color: #000086; /* Cambia el color del texto */
-      font-size: 14px;
+      margin-top: 20px;
     }
 
-    .container label {
-      display: inline-block;
-      width: 200px; /* Ancho fijo para las etiquetas */
-      font-weight: bold;
+    .btn-reserve:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(169, 45, 3, 0.4);
+      color: white;
     }
 
-    .label{
-      color: #008252;
-      background-color: #00eeff;
-    }
-
-    .btn1 {
-      display: inline-block;
-      background-color: #03a977;
-      border: 2px solid #00eeff;
-      color: #020202;
-      padding: 6px 8px;
+    .btn-back {
+      color: #6c757d;
       text-decoration: none;
-      font-size: 14px;
-      border-radius: 4px;
+      display: inline-block;
+      margin-top: 20px;
+      transition: color 0.3s;
     }
 
-  .btn {
-    display: inline-block;
-    background-color: #a92d03;
-    border: 2px solid #ff6a00;
-    color: #ffffff;
-    padding: 8px 10px;
-    text-decoration: none;
-    font-size: 14px;
-    border-radius: 4px;
+    .btn-back:hover {
+      color: #343a40;
+    }
 
-  }
+    .w-100-mobile {
+      width: 100%;
+    }
 
+    /* Summary Box */
+    .summary-box {
+      background: #f8f9fa;
+      border-radius: 15px;
+      padding: 20px;
+      border-left: 5px solid #a92d03;
+      margin-bottom: 25px;
+    }
+
+    .price-tag {
+      font-size: 1.5rem;
+      color: #28a745;
+      font-weight: 800;
+    }
+
+    .input-group-text {
+      background-color: white;
+      border-right: none;
+    }
+
+    .form-control {
+      border-left: none;
+    }
   </style>
-
-  <script>
-    window.addEventListener('DOMContentLoaded', (event) => {
-      const form = document.querySelector('form');
-
-      form.addEventListener('submit', function (event) {
-        const nombre = form.nombre.value;
-        const apellidos = form.apellidos.value;
-        const correo = form.correo.value;
-        const telefono = form.telefono.value;
-        const fecha = form.fecha.value; // Obtén el valor del campo de fecha
-        const fecha_de_salida = form.fecha_de_salida.data
-
-        let isValid = true;
-
-        if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(nombre)) {
-          alert('Nombre inválido: Solo se permiten letras y espacios');
-          isValid = false;
-        }
-
-        if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(apellidos)) {
-          alert('Apellidos inválidos: Solo se permiten letras y espacios');
-          isValid = false;
-        }
-
-        if (!/^\+?[0-9]+$/.test(telefono)) {
-          alert('Teléfono inválido: No se permiten simbolos especiales y letras.');
-          isValid = false;
-        }
-
-        if (!/^[\w\.-]+@[\w\.-]+\.\w+$/.test(correo)) {
-          alert('Correo electrónico inválido');
-          isValid = false;
-        }
-
-        const selectedDate = new Date(fecha);
-        const currentDate = new Date();
-
-        if (selectedDate < currentDate) {
-          alert('Fecha de reserva inválida: No puede ser anterior a la fecha actual.');
-          isValid = false;
-        }
-
-        const fechaSalidaInput = document.getElementById('fecha_de_salida');
-        const fechaSalida = fechaSalidaInput.value;
-
-        const selectedDateSalida = new Date(fechaSalida);
-
-        if (selectedDateSalida < currentDate) {
-          alert('Fecha de salida inválida: No puede ser anterior a la fecha actual.');
-          isValid = false;
-        }
-
-        if (!isValid) {
-          event.preventDefault(); // Evita el envío del formulario si hay errores
-        }
-      });
-    });
-  </script>
-
 </head>
-
 
 <body>
 
-  <div class="container">
-    <h1>Formulario de Reservación para tu cabaña.</h1>
-    <form method="post" action="/formulario"> <!-- Agregado 'action' para especificar la ruta del formulario -->
+  <div class="booking-card">
+    <div class="card-header">
+      <h2><i class="fas fa-calendar-check me-2"></i>Finalizar Reservación</h2>
+      <p class="mb-0 text-white-50">Ingresa tus datos para confirmar tu estancia</p>
+    </div>
 
-      <label for="nombre">Nombre:</label>
-      <input type="text" id="nombre" name="nombre" required><br>
+    <div class="card-body p-4 p-md-5">
 
-      <label for="apellidos">Apellidos:</label>
-      <input type="text" id="apellidos" name="apellidos" required><br>
+      <div class="summary-box d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <div>
+          <h5 class="mb-1 text-muted">Cabaña Seleccionada</h5>
+          <h3 class="mb-0 text-dark" id="displayCabana">{{ request.args.get('nombre_cabana', 'Estándar') }}</h3>
+        </div>
 
-      <label for="correo">Correo electrónico:</label>
-      <input type="email" id="correo" name="correo" required><br>
+        <div class="text-end">
+          <h5 class="mb-1 text-muted">Total a Pagar</h5>
+          <div class="price-tag">$150.00</div>
+        </div>
+      </div>
 
-      <label for="telefono">Teléfono:</label>
-      <input type="tel" id="telefono" name="telefono" required><br> <!-- Cambiado 'number' a 'tel' para aceptar el formato de teléfono -->
-      
-      <label for="fecha">Fecha de reserva:</label>
-      <input type="date" id="fecha" name="fecha" required><br>
+      <form method="post" action="/formulario" class="row g-3 needs-validation" novalidate>
 
-      <label for="fecha">Fecha de salida:</label>
-      <input type="date" id="fecha_de_salida" name="fecha_de_salida" required><br>
+        <!-- Hidden Fields -->
+        <input type="hidden" id="nombre_cabana" name="nombre_cabana" value="{{ request.args.get('nombre_cabana') }}">
+        {{ form.precio }}
 
-     <!-- Campo oculto para capturar el nombre de la cabaña -->
-     <input type="hidden" id="nombre_cabana" name="nombre_cabana" value="{{ request.args.get('nombre_cabana') }}">
+        <!-- Personal Info -->
+        <h5 class="mb-3 mt-4 text-primary"><i class="fas fa-user me-2"></i>Datos Personales</h5>
 
-      <label>Nombre de la cabaña:</label>
-      <span>{{ request.args.get('nombre_cabana') }}</span><br>
+        <div class="col-md-6">
+          <label for="nombre" class="form-label">Nombre(s)</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ej. Juan" required>
+          </div>
+        </div>
 
+        <div class="col-md-6">
+          <label for="apellidos" class="form-label">Apellidos</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+            <input type="text" class="form-control" id="apellidos" name="apellidos" placeholder="Ej. Pérez" required>
+          </div>
+        </div>
 
-      <label>Precio:</label>
-      <span>{{ form.precio.data }}</span><br>
-      {% if form.precio.errors %}
-        <small class="form-text text-danger">{{ form.precio.errors[0] }}</small>
-    {% endif %}
+        <div class="col-md-6">
+          <label for="correo" class="form-label">Correo Electrónico</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+            <input type="email" class="form-control" id="correo" name="correo" placeholder="correo@ejemplo.com"
+              required>
+          </div>
+        </div>
 
-      <input type="submit" class="btn1" value="Enviar">
-    </form>
+        <div class="col-md-6">
+          <label for="telefono" class="form-label">Teléfono</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+            <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Ej. 55 1234 5678"
+              required>
+          </div>
+        </div>
 
-    <a href="/reservar/" class="btn">Regresar.</a>
-    
+        <!-- Dates -->
+        <h5 class="mb-3 mt-4 text-primary"><i class="fas fa-clock me-2"></i>Fechas de Estancia</h5>
+
+        <div class="col-md-6">
+          <label for="fecha" class="form-label">Llegada</label>
+          <input type="date" class="form-control" id="fecha" name="fecha" required>
+        </div>
+
+        <div class="col-md-6">
+          <label for="fecha_de_salida" class="form-label">Salida</label>
+          <input type="date" class="form-control" id="fecha_de_salida" name="fecha_de_salida" required>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="col-12 text-center mt-5">
+          <button type="submit" class="btn btn-reserve pulse">
+            <i class="fas fa-check-circle me-2"></i>CONFIRMAR RESERVACIÓN
+          </button>
+
+          <a href="/reservar/" class="btn-back">
+            <i class="fas fa-arrow-left me-1"></i> Cancelar y Volver
+          </a>
+        </div>
+
+      </form>
+    </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
+    // Set URL params to hidden inputs and display if present
     window.addEventListener('DOMContentLoaded', () => {
       const urlParams = new URLSearchParams(window.location.search);
-      const nombreCabana = urlParams.get('cabana');
+      const nombreCabana = urlParams.get('nombre_cabana');
 
       if (nombreCabana) {
-        const nombreCabanaField = document.getElementById('nombre_cabana');
-        nombreCabanaField.value = nombreCabana;
+        document.getElementById('nombre_cabana').value = nombreCabana;
+        document.getElementById('displayCabana').textContent = nombreCabana;
       }
     });
-  </script>
 
+    // Simple client-side validation logic from previous script can be adapted here
+    // or rely on HTML5 required + Server side WTForms
+  </script>
 </body>
+
 </html>

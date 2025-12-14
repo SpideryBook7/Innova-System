@@ -1,0 +1,9 @@
+flask
+reportlab
+wtforms
+pandas
+matplotlib
+python-dotenv
+gunicorn
+openpyxl
+email_validator
