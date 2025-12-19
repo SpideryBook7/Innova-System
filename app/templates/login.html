@@ -134,17 +134,27 @@
     </div>
     {% endif %}
 
+    <!-- Helper for Demo/Portfolio visitors -->
+    <div class="alert alert-info alert-custom d-flex align-items-center mb-3" role="alert">
+      <i class="fas fa-info-circle me-2"></i>
+      <div>
+        <strong>Acceso Demo:</strong><br>
+        Usuario: admin@innova.com<br>
+        Pass: admin
+      </div>
+    </div>
+
     <form action="/acceso-login" method="post">
 
       <div class="form-floating">
         <input type="email" class="form-control" id="floatingInput" name="txtCorreo" placeholder="nombre@ejemplo.com"
-          required>
+          value="admin@innova.com" required>
         <label for="floatingInput">Correo Electrónico</label>
       </div>
 
       <div class="form-floating">
         <input type="password" class="form-control" id="floatingPassword" name="txtPassword" placeholder="Contraseña"
-          required>
+          value="admin" required>
         <label for="floatingPassword">Contraseña</label>
       </div>
 

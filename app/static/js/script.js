@@ -1,7 +1,7 @@
 
 
 function reservar(cabanaId) {
-    // Aquí puedes implementar la lógica para procesar la reservación de la cabaña seleccionada
+  // Aquí puedes implementar la lógica para procesar la reservación de la cabaña seleccionada
 }
 
 // Esto es opcional, pero puedes ajustar la velocidad de la animación aquí
@@ -22,3 +22,9 @@ if (duracionActual !== duracionAnimacion) {
   texto.style.animationDuration = `${duracionAnimacion}ms`;
 }
 
+
+// Mobile Menu Toggle
+function toggleMenu() {
+  const headerRight = document.getElementById('headerRight');
+  headerRight.classList.toggle('active');
+}
